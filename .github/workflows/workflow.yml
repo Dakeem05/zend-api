@@ -28,13 +28,13 @@ jobs:
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.MAIL_HOST }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.MAIL_USERNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.MAIL_FROM_ADDRESS }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.TWILIO_SID }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.TWILIO_TOKEN }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.TWILIO_FROM }}" >> .env
+          echo "MAIL_HOST=${{ secrets.MAIL_HOST }}" >> .env
+          echo "MAIL_USERNAME =${{ secrets.MAIL_USERNAME }}" >> .env
+          echo "MAIL_PASSWORD =${{ secrets.MAIL_PASSWORD }}" >> .env
+          echo "MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}" >> .env
+          echo "TWILIO_SID=${{ secrets.TWILIO_SID }}" >> .env
+          echo "TWILIO_TOKEN=${{ secrets.TWILIO_TOKEN }}" >> .env
+          echo "TWILIO_FROM=${{ secrets.TWILIO_FROM }}" >> .env
 
       - name: Install Dependencies
         run: composer update --ignore-platform-reqs
