@@ -13,8 +13,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2  # Ensure you are using at least PHP 8.1
-          tools: composer
+          php-version: 8.2
 
       - name: Get the latest code
         uses: actions/checkout@v2.3.2
@@ -22,9 +21,10 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-      # Here is the step to append GitHub secrets to the .env file
+      # Corrected step to append GitHub secrets to the .env file with newlines
       - name: Add Environment Variables to .env
         run: |
+          echo "" >> .env  # Add a newline to avoid concatenation
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
