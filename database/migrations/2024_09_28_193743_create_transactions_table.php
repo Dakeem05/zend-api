@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->uuid()->index();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('code')->unique();
             $table->string('twitter')->nullable();
             $table->string('link')->unique()->nullable();
             $table->double('amount');
