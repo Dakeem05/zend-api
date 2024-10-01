@@ -42,23 +42,13 @@ class TransactionService
             ];
         }
 
-        $code = $this->generateCode();
-
-        if (! $code) {
-            return (object) [
-                'success' => false,
-                'message' => 'Something went wrong while generating code'
-            ];
-        }
-
-        $link = env('APP_FRONTEND_LINK').'/'.$code;
 
         if ($data->method == "email") {
-            Mail::to($data->recipient)->send(new RecieveCrypto($user->address, $data->amount, $link, $data->token));
+            Mail::to($data->recipient)->send(new RecieveCrypto($user->address, $data->amount, $data->link, $data->token));
         } else {
             $message = "You have received $data->amount $data->token from address $user->address.\n";
             $message .= "Please click the link below to claim your crypto:\n";
-            $message .= $link;
+            $message .= $data->link;
             try {
   
                 $account_sid = getenv("TWILIO_SID");
@@ -84,7 +74,6 @@ class TransactionService
             'method' => $data->method,
             'recipient' => $data->recipient,
             'link' => $data->link,
-            'code' => $code,
             'token' => $data->token
         ]);
 
@@ -94,7 +83,7 @@ class TransactionService
         ];
     }
 
-    public function show (string $address, string $code) 
+    public function show (string $address, string $uuid) 
     {
         $user = User::where('address', $address)->first();
 
@@ -105,7 +94,7 @@ class TransactionService
             ];
         }
         
-        $transaction = Transaction::where('user_id', $user->id)->where('code', $code)->first();
+        $transaction = Transaction::where('user_id', $user->id)->where('uuid', $uuid)->first();
         
         if ($transaction == null) {
             return (object) [
@@ -120,9 +109,9 @@ class TransactionService
         ];
     }
 
-    public function request (string $code) 
+    public function request (string $link) 
     {        
-        $transaction = Transaction::where('code', $code)->first();
+        $transaction = Transaction::where('link', $link)->first();
         
         if ($transaction == null) {
             return (object) [
@@ -137,9 +126,9 @@ class TransactionService
         ];
     }
 
-    public function action (string $code) 
+    public function action (string $uuid) 
     {        
-        $transaction = Transaction::where('code', $code)->first();
+        $transaction = Transaction::where('uuid', $uuid)->first();
         
         if ($transaction == null) {
             return (object) [
@@ -163,27 +152,4 @@ class TransactionService
             'message' => "Transaction claimed succesfully"
         ];
     }
-
-    private function generateCode($string_length = 20, $recursion_limit = 10)
-    {
-        if ($recursion_limit <= 0) {
-            // We don't expect this to generate a code 10 times and all the codes are taken or for something to go wrong.
-            // If such happens which is rare but not impossible, break out of the recursive loop.
-            return null;
-        }
-
-        $randomString = Str::random($string_length);
-        $code = 'zend-'.Str::lower($randomString);
-
-        if (! $this->checkIfCodeExists($code)) {
-            return $code;
-        } else {
-            return $this->generateCode($string_length, $recursion_limit - 1);
-        }
-    }
-
-    private function checkIfCodeExists(string $code)
-    {
-        return Transaction::where('code', $code)->exists();
-    }  
 }

@@ -42,9 +42,9 @@ class TransactionController extends Controller
         }
     }
     
-    public function show (string $address, string $code) 
+    public function show (string $address, string $uuid) 
     {
-        $request = $this->transaction_service->show($address, $code);
+        $request = $this->transaction_service->show($address, $uuid);
 
         if ($request->success == false) {
             return $this->errorResponse($request->message);
@@ -55,9 +55,9 @@ class TransactionController extends Controller
         }
     }
 
-    public function request (string $code) 
+    public function request (string $link) 
     {
-        $request = $this->transaction_service->request($code);
+        $request = $this->transaction_service->request($link);
 
         if ($request->success == false) {
             return $this->errorResponse($request->message);
@@ -68,9 +68,9 @@ class TransactionController extends Controller
         }
     }
 
-    public function action (string $code) 
+    public function action (string $uuid) 
     {
-        $request = $this->transaction_service->action($code);
+        $request = $this->transaction_service->action($uuid);
 
         if ($request->success == false) {
             return $this->errorResponse($request->message);
