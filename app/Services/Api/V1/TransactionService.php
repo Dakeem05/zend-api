@@ -109,9 +109,9 @@ class TransactionService
         ];
     }
 
-    public function request (string $link) 
+    public function request (object $data) 
     {        
-        $transaction = Transaction::where('link', $link)->first();
+        $transaction = Transaction::where('link', $data->link)->first();
         
         if ($transaction == null) {
             return (object) [

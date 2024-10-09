@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\FetchTransactionRequest;
 use App\Http\Requests\Api\V1\TransactionCreationRequest;
 use App\Services\Api\V1\TransactionService;
 use App\Traits\Api\V1\ApiResponseTrait;
@@ -55,9 +56,10 @@ class TransactionController extends Controller
         }
     }
 
-    public function request (string $link) 
+    public function request (FetchTransactionRequest $request) 
     {
-        $request = $this->transaction_service->request($link);
+        $data = (object) $request->validated();
+        $request = $this->transaction_service->request($data);
 
         if ($request->success == false) {
             return $this->errorResponse($request->message);
