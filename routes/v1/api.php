@@ -16,6 +16,6 @@ Route::middleware('api')->group(function () {
             Route::get('/{address}/{code}', 'show');
         });
     });    
-    Route::get('/transaction-request/{link}', [TransactionController::class, 'request']);
+    Route::get('/transaction-request/{code}', [TransactionController::class, 'request']);
     Route::get('/transaction-action/{code}', [TransactionController::class, 'action']);
 });

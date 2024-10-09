@@ -27,7 +27,7 @@ class TransactionCreationRequest extends FormRequest
             'amount' => ['required', 'numeric'],
             'method' => ['required', 'in:email,phone'],
             'link' => ['required', 'string', 'unique:transactions,link'],
-            'recipient' => ['required', 'string'],
+            'recipient' => ['required'],
             'token' => ['required', 'string'],
         ];
     }
