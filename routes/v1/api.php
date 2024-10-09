@@ -17,5 +17,5 @@ Route::middleware('api')->group(function () {
         });
     });    
     Route::put('/transaction-request', [TransactionController::class, 'request']);
-    Route::get('/transaction-action/{code}', [TransactionController::class, 'action']);
+    Route::get('/transaction-action/{uuid}', [TransactionController::class, 'action']);
 });
