@@ -24,11 +24,11 @@ jobs:
       # Corrected step to append GitHub secrets to the .env file with newlines
       - name: Add Environment Variables to .env
         run: |
+          echo "" >> .env  # Add a newline to avoid concatenation
           echo "MAIL_HOST=${{ secrets.MAIL_HOST }}" >> .env
           echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> .env
           echo "MAIL_PASSWORD='${{ secrets.MAIL_PASSWORD }}'" >> .env
           echo "MAIL_FROM_ADDRESS='${{ secrets.MAIL_FROM_ADDRESS }}'" >> .env
-          echo "" >> .env  # Add a newline to avoid concatenation
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
