@@ -21,7 +21,7 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-      Corrected step to append GitHub secrets to the .env file with newlines
+      # Corrected step to append GitHub secrets to the .env file with newlines
       - name: Add Environment Variables to .env
         run: |
           echo "MAIL_HOST=${{ secrets.MAIL_HOST }}" >> .env
