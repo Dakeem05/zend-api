@@ -18,29 +18,29 @@ jobs:
       - name: Get the latest code
         uses: actions/checkout@v2.3.2
 
-      # - name: Copy .env
-      #   run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-      # Corrected step to append GitHub secrets to the .env file with newlines
-      # - name: Add Environment Variables to .env
-      #   run: |
-      #     echo "" >> .env  # Add a newline to avoid concatenation
-      #     echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
-      #     echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-      #     echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-      #     echo "MAIL_HOST=${{ secrets.MAIL_HOST }}" >> .env
-      #     echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> .env
-      #     echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
-      #     echo "MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}" >> .env
-      #     echo "TWILIO_SID=${{ secrets.TWILIO_SID }}" >> .env
-      #     echo "TWILIO_TOKEN=${{ secrets.TWILIO_TOKEN }}" >> .env
-      #     echo "TWILIO_FROM=${{ secrets.TWILIO_FROM }}" >> .env
+      Corrected step to append GitHub secrets to the .env file with newlines
+      - name: Add Environment Variables to .env
+        run: |
+          echo "MAIL_HOST=${{ secrets.MAIL_HOST }}" >> .env
+          echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> .env
+          echo "MAIL_PASSWORD='${{ secrets.MAIL_PASSWORD }}'" >> .env
+          echo "MAIL_FROM_ADDRESS='${{ secrets.MAIL_FROM_ADDRESS }}'" >> .env
+          echo "" >> .env  # Add a newline to avoid concatenation
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "TWILIO_SID=${{ secrets.TWILIO_SID }}" >> .env
+          echo "TWILIO_TOKEN=${{ secrets.TWILIO_TOKEN }}" >> .env
+          echo "TWILIO_FROM=${{ secrets.TWILIO_FROM }}" >> .env
 
       - name: Install Dependencies
         run: composer update --ignore-platform-reqs
 
-      # - name: Generate key
-      #   run: php artisan key:generate
+      - name: Generate key
+        run: php artisan key:generate
 
       - name: Generate storage link
         run: php artisan storage:link
